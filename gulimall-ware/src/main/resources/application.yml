@@ -1,7 +1,7 @@
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://192.168.200.133:3306/gulimall_wms?useSSL=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://192.168.200.135:3306/gulimall_wms?useSSL=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -11,6 +11,9 @@ spring:
         server-addr: 127.0.0.1:8848
   application:
     name: gulimall-ware
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
@@ -20,3 +23,8 @@ mybatis-plus:
 
 server:
   port: 12000
+
+logging:
+  level:
+#    指定包的日志等级
+    com.gulimall: debug
