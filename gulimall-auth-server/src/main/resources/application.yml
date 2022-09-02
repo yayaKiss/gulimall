@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: gulimall-auth-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  thymeleaf:
+    cache: false
+  redis:
+    host: 192.168.200.136
+    password: li158158@yt
+  session:
+    store-type: redis
+server:
+  port: 20000
+  servlet:
+    session:
+      timeout: 30m
+

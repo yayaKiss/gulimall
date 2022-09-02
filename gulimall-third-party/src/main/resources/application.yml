@@ -9,6 +9,10 @@ spring:
       oss:
         endpoint: oss-cn-hangzhou.aliyuncs.com
         bucket: gulimall-lijie
+      host: http://jumsendsms.market.alicloudapi.com
+      path: /sms/send-upgrade
+      appcode: 552ac12841954322acde17bf4b31b10d
+      templateId: M105EABDEC
   application:
     name: gulimall-third-party
 

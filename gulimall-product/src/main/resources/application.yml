@@ -1,7 +1,7 @@
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://192.168.200.135:3306/gulimall_pms?useSSL=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://192.168.200.136:3306/gulimall_pms?useSSL=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -21,6 +21,20 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
+  thymeleaf:
+    cache: false  #cache: 是否缓存，开发模式下设置为false，避免改了模板还要重启服务器，线上设置为true，可以提高性能。
+  redis:
+    host: 192.168.200.136
+    password: li158158@yt
+
+  cache:
+    type: redis
+    redis:
+      time-to-live: 360000  #ms
+      cache-null-values: true
+#      key-prefix: CACHE_
+      use-key-prefix: true
+
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
   global-config:
@@ -29,10 +43,18 @@ mybatis-plus:
       logic-delete-value: 0
       logic-not-delete-value: 1
 
+
 server:
   port: 11000
 
 logging:
   level:
-    com.gulimall: debug
+    com.gulimall: error
+
+
+gulimall:
+  thread:
+    core-pool-size: 20
+    max-pool-size: 200
+    keep-alive-time: 200
 
