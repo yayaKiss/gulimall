@@ -1,3 +1,4 @@
+
 spring:
   application:
     name: gulimall-auth-server
@@ -12,6 +13,8 @@ spring:
     password: li158158@yt
   session:
     store-type: redis
+  main:
+    allow-circular-references: true
 server:
   port: 20000
   servlet:

@@ -9,6 +9,7 @@ import com.gulimall.cart.vo.CartItemVo;
 import com.gulimall.cart.vo.CartVo;
 import com.gulimall.cart.vo.SkuInfoVo;
 import com.gulimall.cart.vo.UserInfoTo;
+import com.gulimall.common.utils.R;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundHashOperations;
@@ -16,6 +17,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -137,6 +139,27 @@ public class CartServiceImpl implements CartService {
     public void deleteItem(String skuId) {
         BoundHashOperations<String, Object, Object> cartOps = getCartOps();
         cartOps.delete(skuId.toString());
+    }
+
+    @Override
+    public List<CartItemVo> getUserCartItems() {
+        UserInfoTo userInfoTo = CartInterceptor.threadLocal.get();
+        if(userInfoTo.getUserId() == null){
+            return null;
+        }else {
+            List<CartItemVo> cartItems = getCartItems(CART_PREFIX + userInfoTo.getUserId());
+            List<CartItemVo> collect = null;
+            if(cartItems != null){
+                collect = cartItems.stream().filter(item -> item.getCheck())
+                        .map(item -> {
+                            //购物车中的价格可能改变了，远程查询，进行更新
+                            BigDecimal price = productServiceFeign.getPrice(item.getSkuId());
+                            item.setPrice(price);
+                            return item;
+                        }).collect(Collectors.toList());
+            }
+            return collect;
+        }
     }
 
     private List<CartItemVo> getCartItems(String cartKey ) {
