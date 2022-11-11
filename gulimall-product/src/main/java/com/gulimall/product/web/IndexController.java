@@ -39,14 +39,22 @@ public class IndexController{
         return "index";
     }
 
+    //有缓存
     @GetMapping("/index/catalog.json")
     @ResponseBody
     public Map<String, List<Catelog2Vo>> getCatalogJson() {
 
-        Map<String, List<Catelog2Vo>> catalogJson = categoryService.getCatalogJson();
-
+        Map<String, List<Catelog2Vo>> catalogJson = categoryService.getCatalogJson2();
         return catalogJson;
+    }
 
+    //无缓存
+    @GetMapping("/index/catalog.json1")
+    @ResponseBody
+    public Map<String, List<Catelog2Vo>> getCatalogJson1() {
+
+        Map<String, List<Catelog2Vo>> catalogJson = categoryService.getCatalogJson();
+        return catalogJson;
     }
 
     @GetMapping("/hello")

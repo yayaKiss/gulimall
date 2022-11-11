@@ -165,6 +165,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         //从缓存中查
         String catalogJson = stringRedisTemplate.opsForValue().get("catalogJson");
         //缓存中没有，返回数据库中的,并设置在缓存中
+
         if (StringUtils.isEmpty(catalogJson)) {
             System.out.println("缓存没有命中.....查询数据库....");
             Map<String, List<Catelog2Vo>> catalogJsonFromDb = getCatalogJsonFromDb();
